@@ -1,8 +1,8 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -21,18 +21,15 @@ public class newCompany extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String name = request.getParameter("name");
-		PrintWriter out = response.getWriter();
 		
 		Company company = new Company(name);
 		
 		Database database = new Database();
 		database.addCompany(company);
 		
-		out.println("<html>");
-		out.println("<body>");
-		out.println("Empresa " + name + " cadastrada!!");
-		out.println("</body>");
-		out.println("</html>");
+		RequestDispatcher rd = request.getRequestDispatcher("/newCompany.jsp");
+		request.setAttribute("company", company.getName());
+		rd.forward(request, response);
 	}
 
 }

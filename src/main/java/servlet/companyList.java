@@ -1,9 +1,10 @@
 package servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -19,20 +20,16 @@ public class companyList extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
 		Database database = new Database();
+		
 		List<Company> companyList = database.getCompany();
+		request.setAttribute("companyList", companyList);
 		
-		PrintWriter out = response.getWriter();
-		
-		out.println("<html> <body>");
-		out.println("<ul>");
-		for(Company company : companyList){
-			out.println("<li>" + company.getName() + "</li>");
-		}
-		out.println("</ul>");
-		out.println("</body> </html>");
+		RequestDispatcher rd = request.getRequestDispatcher("/companyList.jsp");
+		rd.forward(request, response);
+
 	}
 
 }
