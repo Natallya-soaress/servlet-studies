@@ -1,9 +1,12 @@
 package model;
 
+import java.util.Date;
+
 public class Company {
 
 	private Integer id;
 	private String name;
+	private Date openingDate = new Date();
 	
 	
 	public Company(String name) {
@@ -21,5 +24,13 @@ public class Company {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public Date getOpeningDate() {
+		return openingDate;
+	}
+
+	public void setOpeningDate(Date openingDate) {
+		this.openingDate = openingDate;
 	}
 }

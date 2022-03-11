@@ -5,7 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,9 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import database.Database;
 import model.Company;
 
-@WebServlet("/newCompany")
-
-public class newCompany extends HttpServlet {
+@WebServlet("/changeCompany")
+public class changeCompany extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 
@@ -25,6 +23,8 @@ public class newCompany extends HttpServlet {
 		
 		String name = request.getParameter("name");
 		String openingDate = request.getParameter("date");
+		String getId = request.getParameter("id");
+		Integer id = Integer.valueOf(getId);
 		Date date = null;
 		
 		try {
@@ -34,19 +34,13 @@ public class newCompany extends HttpServlet {
 			throw new ServletException(e);
 		}
 		
+		Database database = new Database();
+		Company company = database.searchId(id);
 		
-		Company company = new Company(name);
+		company.setName(name);
 		company.setOpeningDate(date);
 		
-		Database database = new Database();
-		database.addCompany(company);
-		
 		response.sendRedirect("companyList");
-		
-		/*
-		RequestDispatcher rd = request.getRequestDispatcher("/companyList");
-		request.setAttribute("company", company.getName());
-		rd.forward(request, response); */
 	}
 
 }
