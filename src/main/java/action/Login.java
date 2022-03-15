@@ -5,6 +5,7 @@ import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import database.Database;
 import model.User;
@@ -21,6 +22,8 @@ public class Login implements Action {
 		User user = database.userExists(name, password);
 		
 		if(user != null) {
+			HttpSession session = request.getSession();
+			session.setAttribute("loggedUser", user);
 			return "redirect:entrance?action=CompanyList";
 		} else {
 			return "redirect:entrance?action=LoginForm";

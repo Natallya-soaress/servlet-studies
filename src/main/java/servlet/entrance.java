@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import action.Action;
 
@@ -21,6 +22,15 @@ public class entrance extends HttpServlet {
 		String functionReturn = null;
 		String getAction = request.getParameter("action");
 		String className = "action." + getAction;
+		
+		HttpSession session = request.getSession();
+		boolean notLoggedUser = (session.getAttribute("loggedUser") == null);
+		boolean protectedAction = !(getAction.equals("Login") || getAction.equals("LoginForm"));
+		
+		if(protectedAction && notLoggedUser) {
+			response.sendRedirect("entrance?action=LoginForm");
+			return;
+		}
 		
 		try {
 			Class cls = Class.forName(className);
