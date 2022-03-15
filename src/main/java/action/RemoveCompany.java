@@ -7,16 +7,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import database.Database;
 
-public class RemoveCompany {
+public class RemoveCompany implements Action {
 
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
+	public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
 			String getId = request.getParameter("id");
 			Integer id = Integer.valueOf(getId);
 			
 			Database database = new Database();
 			database.removeCompany(id);
-			
-			response.sendRedirect("entrance?action=companyList");
+	
+			return "redirect:entrance?action=CompanyList";
 		}
 	}

@@ -2,7 +2,6 @@ package action;
 
 import java.io.IOException;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,9 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import database.Database;
 import model.Company;
 
-public class ShowCompany {
+public class ShowCompany implements Action {
 	
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public String execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String getId = request.getParameter("id");
 		Integer id = Integer.valueOf(getId);
@@ -21,8 +20,7 @@ public class ShowCompany {
 		Company company = database.searchId(id);
 		request.setAttribute("company", company);
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/formEditCompany.jsp");
-		rd.forward(request, response);
-		
+;
+		return "forward:formEditCompany.jsp";
 	}
 }

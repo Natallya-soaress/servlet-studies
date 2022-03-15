@@ -12,9 +12,9 @@ import javax.servlet.http.HttpServletResponse;
 import database.Database;
 import model.Company;
 
-public class NewCompany {
+public class NewCompany implements Action{
 	
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	public String execute(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		
 		String name = request.getParameter("name");
 		String openingDate = request.getParameter("date");
@@ -34,7 +34,7 @@ public class NewCompany {
 		Database database = new Database();
 		database.addCompany(company);
 		
-		response.sendRedirect("entrance?action=companyList");
+		return "redirect:entrance?action=CompanyList";
 		
 	}
 

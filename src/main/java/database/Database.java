@@ -5,10 +5,12 @@ import java.util.Iterator;
 import java.util.List;
 
 import model.Company;
+import model.User;
 
 public class Database {
 	
 	private static List<Company> companyList = new ArrayList<>();
+	private static List<User> userList = new ArrayList<>();
 	private static Integer key = 1;
 	
 	static {
@@ -18,6 +20,12 @@ public class Database {
 		alura.setId(key++);
 		companyList.add(oobj);
 		companyList.add(alura);
+		
+		User user1 = new User("Nat", "2468");
+		User user2 = new User("Root", "0000");
+		userList.add(user1);
+		userList.add(user2);
+		
 	}
 	
 	public void addCompany(Company company) {
@@ -47,6 +55,17 @@ public class Database {
 				return company;
 			}
 		}
+		return null;
+	}
+
+	public User userExists(String userName, String password) {
+		
+		for(User user : userList) {
+			if(user.login(userName, password)) {
+				return user;
+			}
+		}
+		
 		return null;
 	}
 
